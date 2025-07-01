@@ -8,7 +8,9 @@ const AppLayout = () => {
           <main className="min-h-screen container my-5">
               {/*Header */}
               <Header />
+
               {/*body */}
+              
               <Outlet />
           </main>
 
