@@ -13,11 +13,17 @@ import useFetch from '@/hooks/use-fetch';
 import { getUrls } from '@/db/apiUrls';
 import { getClicksForUrls } from '@/db/apiClicks';
 import { UrlState } from '@/context';
+import LinkCard from '@/components/link-card';
 
 const Dashboard = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const { user } = UrlState();
     const { loading, error, data: urls, fn: fnUrls } = useFetch(getUrls, user.id);
+    console.log(
+        'URLs passed to getClicksForUrls:',
+        urls?.map((url) => url.id)
+    );
+
     const {
         loading: loadingClicks,
         data: clicks,
