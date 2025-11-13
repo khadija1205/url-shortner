@@ -58,11 +58,11 @@ const Link = () => {
                 <div className="flex flex-col items-start gap-8 rounded-lg sm:w-2/5">
                     <span className="text-6xl font-extrabold hover:underline cursor-pointer">{url?.title}</span>
                     <a
-                        href={`https://cliprr.in/${link}`}
+                        href={`https://${import.meta.env.VITE_BASE_URL}/${link}`}
                         target="_blank"
                         className="text-3xl sm:text-4xl text-blue-400 font-bold hover:underline cursor-pointer"
                     >
-                        https://cliprr.in/{link}
+                        {import.meta.env.VITE_BASE_URL}/{link}
                     </a>
 
                     <a
@@ -71,7 +71,8 @@ const Link = () => {
                         className="flex items-center gap-1 hover:underline cursor-pointer"
                     >
                         <LinkIcon className="p-1" />
-                        https://cliprr.in{url?.original_url}
+                        {import.meta.env.VITE_BASE_URL}
+                        {url?.original_url}
                     </a>
 
                     <span className="flex items-end font-extralight text-sm">
@@ -81,7 +82,9 @@ const Link = () => {
                     <div className="flex gap-2">
                         <Button
                             variant="ghost"
-                            onClick={() => navigator.clipboard.writeText(`https://cliprr.in/${url?.short_url}`)}
+                            onClick={() =>
+                                navigator.clipboard.writeText(`${import.meta.env.VITE_BASE_URL}/${url?.short_url}`)
+                            }
                         >
                             <Copy />
                         </Button>
