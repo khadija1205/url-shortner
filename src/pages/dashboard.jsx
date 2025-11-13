@@ -13,13 +13,21 @@ import useFetch from '@/hooks/use-fetch';
 import { getUrls } from '@/db/apiUrls';
 import { getClicksForUrls } from '@/db/apiClicks';
 import { UrlState } from '@/context';
+import LinkCard from '@/components/link-card';
+import CreateLink from '@/components/create-link';
 
 const Dashboard = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const { user } = UrlState();
     const { loading, error, data: urls, fn: fnUrls } = useFetch(getUrls, user.id);
+    console.log(
+        'URLs passed to getClicksForUrls:',
+        urls?.map((url) => url.id)
+    );
+
     const {
         loading: loadingClicks,
+        error: errorClicks,
         data: clicks,
         fn: fnClicks
     } = useFetch(
@@ -38,7 +46,7 @@ const Dashboard = () => {
     }, [urls?.length]);
 
     return (
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-8 p-10">
             {(loading || loadingClicks) && <BarLoader width={'100%'} color="#36d7b7" />}
             <div className="grid grid-cols-2 gap-4">
                 <Card>
@@ -60,7 +68,7 @@ const Dashboard = () => {
             </div>
             <div className="flex justify-between">
                 <h1 className="text-4xl font-extrabold">My Links</h1>
-                {/* <CreateLink /> */}
+                <CreateLink />
             </div>
             <div className="relative">
                 <Input
@@ -71,7 +79,8 @@ const Dashboard = () => {
                 />
                 <Filter className="absolute top-2 right-2 p-1" />
             </div>
-            {error && <Error message={error?.message} />}
+            {error && <Error message={error?.message || error} />}
+            {errorClicks && <Error message={errorClicks.message} />}
             {(filteredUrls || []).map((url, i) => (
                 <LinkCard key={i} url={url} fetchUrls={fnUrls} />
             ))}
