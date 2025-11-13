@@ -58,11 +58,11 @@ const Link = () => {
                 <div className="flex flex-col items-start gap-8 rounded-lg sm:w-2/5">
                     <span className="text-6xl font-extrabold hover:underline cursor-pointer">{url?.title}</span>
                     <a
-                        href={`https://trimrr.in/${link}`}
+                        href={`https://cliprr.in/${link}`}
                         target="_blank"
                         className="text-3xl sm:text-4xl text-blue-400 font-bold hover:underline cursor-pointer"
                     >
-                        https://trimrr.in/{link}
+                        https://cliprr.in/{link}
                     </a>
 
                     <a
@@ -71,7 +71,7 @@ const Link = () => {
                         className="flex items-center gap-1 hover:underline cursor-pointer"
                     >
                         <LinkIcon className="p-1" />
-                        https://trimrr.in{url?.original_url}
+                        https://cliprr.in{url?.original_url}
                     </a>
 
                     <span className="flex items-end font-extralight text-sm">
@@ -81,7 +81,7 @@ const Link = () => {
                     <div className="flex gap-2">
                         <Button
                             variant="ghost"
-                            onClick={() => navigator.clipboard.writeText(`https://trimrr.in/${url?.short_url}`)}
+                            onClick={() => navigator.clipboard.writeText(`https://cliprr.in/${url?.short_url}`)}
                         >
                             <Copy />
                         </Button>
