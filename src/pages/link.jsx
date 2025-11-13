@@ -58,11 +58,11 @@ const Link = () => {
                 <div className="flex flex-col items-start gap-8 rounded-lg sm:w-2/5">
                     <span className="text-6xl font-extrabold hover:underline cursor-pointer">{url?.title}</span>
                     <a
-                        href={`https://trimrr.in${link}`}
+                        href={`https://trimrr.in/${link}`}
                         target="_blank"
                         className="text-3xl sm:text-4xl text-blue-400 font-bold hover:underline cursor-pointer"
                     >
-                        https://trimrr.in{link}
+                        https://trimrr.in/{link}
                     </a>
 
                     <a
