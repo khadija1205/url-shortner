@@ -32,7 +32,10 @@ const Signup = () => {
     };
 
     const { data, error, loading, fn: fnSignup } = useFetch(signup, formData);
-    const { fetchUser } = UrlState();
+
+    const urlState = UrlState();
+
+    const { fetchUser } = urlState;
 
     useEffect(() => {
         if (error == null && data) {
@@ -47,10 +50,8 @@ const Signup = () => {
             const schema = Yup.object().shape({
                 name: Yup.string().required('Name is required'),
                 email: Yup.string().email('Invalid Email').required('Email is Required'),
-                password: Yup.string()
-                    .required('Password is Required')
-                    .min(6, 'Password must be at least 6 characters'),
-                profile_pic: Yup.mixed().required('Profile picture is required')
+                password: Yup.string().required('Password is Required').min(6, 'Password must be at least 6 characters')
+                // profile_pic: Yup.mixed()
             });
 
             await schema.validate(formData, { abortEarly: false });
@@ -62,7 +63,7 @@ const Signup = () => {
 
             e?.inner?.forEach((err) => {
                 if (!formData[err.path]) {
-                    newErrors[err.path] = `${err.path[0].toUpperCase() + err.path.slice(1)} is required`;
+                    newErrors[err.path] = err.message;
                 } else {
                     newErrors[err.path] = err.message;
                 }
@@ -71,6 +72,10 @@ const Signup = () => {
             setErrors(newErrors);
         }
     };
+
+    if (!urlState) {
+        return <BeatLoader size={10} color="#36d7b7" />;
+    }
 
     return (
         <Card>

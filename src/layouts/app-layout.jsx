@@ -1,25 +1,24 @@
-import React from 'react'
+import React from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from '../components/header';
 
 const AppLayout = () => {
-  return (
-      <div>
-          <main className="min-h-screen container my-5">
-              {/*Header */}
-              <Header />
+    return (
+        <div>
+            <main className="min-h-screen container my-5">
+                <Header />
 
-              {/*body */}
-              
-              <Outlet />
-          </main>
+                <Outlet />
+            </main>
 
-          <div>
-              {/*footer*/}
-              <div className="p-10 text-center bg-gray-800 text-white">Made By Khadija</div>
-          </div>
-      </div>
-  );
-}
+            {/*footer*/}
 
-export default AppLayout
+
+            <footer className="p-10 text-center bg-gray-800 text-white mt-auto">
+                <p>@ 2025 Khadija Chichkar. All rights reserved</p>
+            </footer>
+        </div>
+    );
+};
+
+export default AppLayout;

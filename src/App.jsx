@@ -1,5 +1,4 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import './App.css'
 import AppLayout from './layouts/app-layout';
 import LandingPage from './pages/landing';
 import DashBoard from './pages/dashboard';
@@ -8,7 +7,6 @@ import Link from './pages/link';
 import RedirectLink from './pages/redirect-link';
 import UrlProvider from './context';
 import RequireAuth from './components/require-auth';
-
 
 const router = createBrowserRouter([
     {
@@ -47,13 +45,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-
     return (
         <UrlProvider>
-            <RouterProvider router={router} />;
+            <RouterProvider router={router} />
         </UrlProvider>
     );
-
 }
 
-export default App
+export default App;

@@ -1,14 +1,7 @@
-import { UrlState } from '@/context'
-import React, { useEffect, useRef, useState } from 'react'
+import { UrlState } from '@/context';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import {
-    Dialog,
-    DialogContent,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Card } from './ui/card';
@@ -17,41 +10,37 @@ import useFetch from '@/hooks/use-fetch';
 import { QRCode } from 'react-qrcode-logo';
 import { createUrl } from '@/db/apiUrls';
 import { BeatLoader } from 'react-spinners';
-
+import Error from './error';
 
 const CreateLink = () => {
-
     const { user } = UrlState();
     const navigate = useNavigate();
 
     const ref = useRef();
     let [searchParams, setSearchParams] = useSearchParams();
-    const longLink = searchParams.get("createNew");
-
+    const longLink = searchParams.get('createNew');
 
     const [errors, setErrors] = useState({});
     const [formValues, setFormValues] = useState({
-        title: "",
-        longUrl: longLink ? longLink : "",
-        customUrl: "",
+        title: '',
+        longUrl: longLink ? longLink : '',
+        customUrl: ''
     });
 
     const schema = yup.object().shape({
-        title: yup.string().required("Title is required"),
-        longUrl: yup.string().url("Must be a valid URL").required("Long URL is required"),
-        customUrl: yup.string(),
+        title: yup.string().required('Title is required'),
+        longUrl: yup.string().url('Must be a valid URL').required('Long URL is required'),
+        customUrl: yup.string()
     });
-
 
     const handleChange = (e) => {
         setFormValues({
             ...formValues,
-            [e.target.id]: e.target.value,
+            [e.target.id]: e.target.value
         });
     };
 
-    const { loading, error, data, fn: fnCreateUrl } = useFetch(createUrl, {...formValues, user_id: user.id});
-
+    const { loading, error, data, fn: fnCreateUrl } = useFetch(createUrl, { ...formValues, user_id: user.id });
 
     useEffect(() => {
         if (error === null && data) {
@@ -59,9 +48,6 @@ const CreateLink = () => {
         }
     }, [error, data]);
 
-
-   
-    
     const createNewLink = async () => {
         setErrors([]);
         try {
@@ -79,57 +65,55 @@ const CreateLink = () => {
 
             setErrors(newErrors);
         }
-    }
+    };
 
+    return (
+        <Dialog
+            defaultOpen={longLink}
+            onOpenChange={(res) => {
+                if (!res) setSearchParams({});
+            }}
+        >
+            <DialogTrigger>
+                <Button variant="destructive">Create New Link</Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                    <DialogTitle className="font-bold text-2xl">Create New</DialogTitle>
+                </DialogHeader>
 
+                {formValues?.longUrl && <QRCode value={formValues?.longUrl} size={250} ref={ref} />}
 
-  return (
-      <Dialog
-          defaultOpen={longLink}
-          onOpenChange={(res) => {
-              if (!res) setSearchParams({});
-          }}
-      >
-          <DialogTrigger>
-              <Button variant="destructive">Create New Link</Button>
-          </DialogTrigger>
-          <DialogContent className="sm:max-w-md">
-              <DialogHeader>
-                  <DialogTitle className="font-bold text-2xl">Create New</DialogTitle>
-              </DialogHeader>
+                <Input id="title" placeholder="Short Link's title" value={formValues.title} onChange={handleChange} />
+                {errors.title && <Error message={errors.title} />}
 
-              {formValues?.longUrl && <QRCode value={formValues?.longUrl} size={250} ref={ref} />}
+                <Input
+                    id="longUrl"
+                    placeholder="Enter your Looong URL"
+                    value={formValues.longUrl}
+                    onChange={handleChange}
+                />
+                {errors.longUrl && <Error message={errors.longUrl} />}
 
-              <Input id="title" placeholder="Short Link's title" value={formValues.title} onChange={handleChange} />
-              {errors.title && <Error message={error.title} />}
+                <div className="flex items-center gap-2">
+                    <Card className="p-2">trimrr.in</Card>
+                    <Input
+                        id="customUrl"
+                        placeholder="Custom Link (optional)"
+                        value={formValues.customUrl}
+                        onChange={handleChange}
+                    />
+                    {error && <Error message={error.message} />}
 
-              <Input
-                  id="longUrl"
-                  placeholder="Enter your Looong URL"
-                  value={formValues.longUrl}
-                  onChange={handleChange}
-              />
-              {errors.longUrl && <Error message={error.longUrl} />}
+                    <DialogFooter className="sm:justify-start">
+                        <Button disabled={loading} onClick={createNewLink} variant="destructive">
+                            {loading ? <BeatLoader size={10} color="white" /> : 'Create'}
+                        </Button>
+                    </DialogFooter>
+                </div>
+            </DialogContent>
+        </Dialog>
+    );
+};
 
-              <div className="flex items-center gap-2">
-                  <Card className="p-2">trimrr.in</Card>
-                  <Input
-                      id="customUrl"
-                      placeholder="Custom Link (optional)"
-                      value={formValues.customUrl}
-                      onChange={handleChange}
-                  />
-                  {error && <Error message={error.message} />}
-
-                  <DialogFooter className="sm:justify-start">
-                      <Button disabled={loading} onClick={createNewLink} variant="destructive">
-                          {loading ? <BeatLoader size={10} color="white" /> : 'Create'}
-                      </Button>
-                  </DialogFooter>
-              </div>
-          </DialogContent>
-      </Dialog>
-  );
-}
-
-export default CreateLink
+export default CreateLink;
