@@ -5,10 +5,12 @@ A live, deployed version of this project is available at:
 # URL Shortener with Analytics
 A full-stack URL shortening service with real-time analytics, custom aliases, and QR code generation built with modern web technologies.
 
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=node.js&logoColor=white)
-![Express](https://img.shields.io/badge/Express-000000?style=flat&logo=express&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat&logo=mongodb&logoColor=white)
 ![React](https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=black)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=flat&logo=supabase&logoColor=white)
+![shadcn/ui](https://img.shields.io/badge/shadcn/ui-000000?style=flat&logo=shadcnui&logoColor=white)
+
+## Project Overview
 
 ## Project Overview
 This project is a production-ready URL shortener that provides custom short links, detailed analytics tracking, and QR code generation. Built to demonstrate full-stack development skills including RESTful API design, database optimization, and responsive frontend development.
